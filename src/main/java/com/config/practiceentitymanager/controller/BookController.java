@@ -86,4 +86,17 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/titles/{title}")
+    @Operation(summary = "Get book by title.")
+    public ResponseEntity<ApiResponse<List<Book>>> getBookByTitle(@PathVariable String title) {
+        ApiResponse<List<Book>> response = ApiResponse.<List<Book>>builder()
+                .message("Get book by title successfully.")
+                .payload(bookRepository.getBookByTitle(title))
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }

@@ -56,4 +56,18 @@ public class BookRepository {
         Book book = getBookById(bookId);
         entityManager.remove(book);
     }
+
+    public List<Book> getBookByTitle(String title) {
+        List<Book> book = entityManager.createQuery(
+                        "SELECT b FROM books b WHERE LOWER(b.title) LIKE LOWER(CONCAT('%', :custTitle, '%'))",
+                        Book.class
+                )
+                .setParameter("custTitle", title)
+                .getResultList();
+
+        if (book.isEmpty()){
+            throw new NotFoundException("Book title ("+title+") not found");
+        }
+        return book;
+    }
 }
