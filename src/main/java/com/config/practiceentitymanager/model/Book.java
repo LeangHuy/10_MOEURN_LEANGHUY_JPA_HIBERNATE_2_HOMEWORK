@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,5 +25,5 @@ public class Book {
     @Column(nullable = false)
     private String author;
     @Temporal(TemporalType.DATE)
-    private Date publicationYear;
+    private LocalDate publicationYear;
 }

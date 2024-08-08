@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -16,6 +18,5 @@ public class BookRequest {
     @NotNull
     @NotBlank
     private String author;
-    @NotNull
-    private String publicationYear;
+    private LocalDate publicationYear;
 }
