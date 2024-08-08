@@ -40,4 +40,20 @@ public class BookRepository {
         }
         return book;
     }
+
+    public Book updateBookById(UUID bookId, BookRequest bookRequest) {
+        Book book = getBookById(bookId);
+        entityManager.detach(book);
+        book.setTitle(bookRequest.getTitle());
+        book.setDescription(bookRequest.getDescription());
+        book.setAuthor(bookRequest.getAuthor());
+        book.setPublicationYear(bookRequest.getPublicationYear());
+        entityManager.merge(book);
+        return book;
+    }
+
+    public void deleteBookById(UUID bookId) {
+        Book book = getBookById(bookId);
+        entityManager.remove(book);
+    }
 }

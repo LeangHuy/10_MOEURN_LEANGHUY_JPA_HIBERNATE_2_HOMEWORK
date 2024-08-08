@@ -48,6 +48,7 @@ public class BookController {
     }
 
     @GetMapping("/{bookId}")
+    @Operation(summary = "Get book by id.")
     public ResponseEntity<ApiResponse<Book>> getBookById(@PathVariable UUID bookId) {
         ApiResponse<Book> response = ApiResponse.<Book>builder()
                 .message("Get book by id successfully.")
@@ -59,5 +60,30 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PutMapping("/{bookId}")
+    @Operation(summary = "Update book by id.")
+    public ResponseEntity<ApiResponse<Book>> updateBookById(@PathVariable UUID bookId, @Valid @RequestBody BookRequest bookRequest) {
+        ApiResponse<Book> response = ApiResponse.<Book>builder()
+                .message("Update book by id successfully.")
+                .payload(bookRepository.updateBookById(bookId,bookRequest))
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @DeleteMapping("/{bookId}")
+    @Operation(summary = "Delete book by id.")
+    public ResponseEntity<ApiResponse<Book>> deleteBookById(@PathVariable UUID bookId) {
+        bookRepository.deleteBookById(bookId);
+        ApiResponse<Book> response = ApiResponse.<Book>builder()
+                .message("Delete book by id successfully.")
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
 }
