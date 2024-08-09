@@ -15,3 +15,7 @@ spring:
     show_sql: true
 server:
   port: 8081
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha
+    doc-expansion: false

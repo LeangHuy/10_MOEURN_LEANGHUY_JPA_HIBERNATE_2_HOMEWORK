@@ -36,6 +36,7 @@ public class BookController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all books.")
     public ResponseEntity<ApiResponse<List<Book>>> getAllBooks() {
         ApiResponse<List<Book>> response = ApiResponse.<List<Book>>builder()
                 .message("Get all books successfully.")
