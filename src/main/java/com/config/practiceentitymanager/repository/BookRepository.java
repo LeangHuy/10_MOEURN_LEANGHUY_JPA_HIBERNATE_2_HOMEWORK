@@ -6,6 +6,8 @@ import com.config.practiceentitymanager.model.dto.BookRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,17 +16,15 @@ import java.util.UUID;
 
 @Repository
 @Transactional
+@AllArgsConstructor
 public class BookRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
+    private final ModelMapper modelMapper;
 
     public Book createBook(BookRequest bookRequest) {
-        Book book = new Book();
-        book.setTitle(bookRequest.getTitle());
-        book.setDescription(bookRequest.getDescription());
-        book.setAuthor(bookRequest.getAuthor());
-        book.setPublicationYear(bookRequest.getPublicationYear());
+        Book book = modelMapper.map(bookRequest, Book.class);
         entityManager.persist(book);
         return book;
     }
@@ -44,10 +44,7 @@ public class BookRepository {
     public Book updateBookById(UUID bookId, BookRequest bookRequest) {
         Book book = getBookById(bookId);
         entityManager.detach(book);
-        book.setTitle(bookRequest.getTitle());
-        book.setDescription(bookRequest.getDescription());
-        book.setAuthor(bookRequest.getAuthor());
-        book.setPublicationYear(bookRequest.getPublicationYear());
+        modelMapper.map(bookRequest, book);
         entityManager.merge(book);
         return book;
     }
